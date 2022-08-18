@@ -1,6 +1,7 @@
 import '../css/common.css';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const refs = {
   input: document.querySelector('#datetime-picker'),
@@ -14,9 +15,8 @@ const refs = {
 refs.startBtn.addEventListener('click', () => {
   timer.start();
 });
-refs.startBtn.setAttribute('disabled', true);
 let timeAdd = null;
-
+let intervalId = null;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -26,32 +26,36 @@ const options = {
     timeAdd = selectedDates[0].getTime();
     console.log(timeAdd);
     if (timeAdd < new Date()) {
-      window.alert('Please choose a date in the future');
-      refs.startBtn.setAttribute('disabled', true);
+      Notiflix.Notify.window('Please choose a date in the future');
       return;
     }
-
     refs.startBtn.removeAttribute('disabled');
+    clearInterval(intervalId);
+    clearConsol();
   },
 };
 const timer = {
-  intervalId: null,
-  isActive: false,
   start() {
-    this.isActive = true;
-    setInterval(() => {
+    intervalId = setInterval(() => {
       const deltaTime = timeAdd - new Date().getTime();
 
       if (deltaTime <= 0) {
-        clearInterval(timer);
+        clearInterval(intervalId);
         return;
       }
+
       const time = convertMs(deltaTime);
       updateClockInfo(time);
     }, 1000);
-    refs.startBtn.setAttribute('disabled', true);
+    refs.startBtn.disabled = true;
   },
 };
+function clearConsol() {
+  refs.days.textContent = '00';
+  refs.hours.textContent = '00';
+  refs.minutes.textContent = '00';
+  refs.seconds.textContent = '00';
+}
 
 function updateClockInfo({ days, hours, minutes, seconds }) {
   refs.days.textContent = `${days}`;

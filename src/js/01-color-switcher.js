@@ -16,19 +16,19 @@ function getRandomHexColor() {
 
 const timer = {
   intervalId: 0,
-  isActive: false,
+ 
   start() {
     if (this.isActive) {
     }
     this.intervalId = setInterval(() => {
       changeBody();
     }, 1000);
-    startBtn.setAttribute('disabled', true);
+    startBtn.disabled = true;
     stopBtn.removeAttribute('disabled');
   },
   stop() {
     clearInterval(this.intervalId);
-    stopBtn.setAttribute('disabled', true);
+    stopBtn.disabled = true;
     startBtn.removeAttribute('disabled');
   },
 };

@@ -40,11 +40,11 @@ function callPromis(delay, step, amount) {
   }
 }
 
-form.addEventListener('submit', buttonSubmit);
+form.addEventListener('submit', formSubmit);
 
-function buttonSubmit (e) {
+function formSubmit (e) {
   e.preventDefault();
-  const delay = form.delay.value;
+  const delay = e.currentTarget.value;
   const step = form.step.value;
   const amount = form.amount.value;
   callPromis(delay, step, amount);
