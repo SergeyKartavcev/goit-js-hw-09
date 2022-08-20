@@ -28,7 +28,7 @@ function createPromise(position, delay) {
 function callPromis(delay, step, amount) {
   let position = 0;
   for (let i = 0; i < amount; i += 1) {
-    position += 1;
+    i += 1;
     createPromise(position, delay)
       .then(resolve => {
         Notiflix.Notify.success(resolve);
@@ -44,8 +44,8 @@ form.addEventListener('submit', formSubmit);
 
 function formSubmit (e) {
   e.preventDefault();
-  const delay = e.currentTarget.value;
-  const step = form.step.value;
-  const amount = form.amount.value;
+  const delay = e.currentTarget.elements.delay.value;
+  const step = e.currentTarget.elements.step.value;
+  const amount = e.currentTarget.elements.amount.value;
   callPromis(delay, step, amount);
 }

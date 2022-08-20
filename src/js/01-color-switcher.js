@@ -18,8 +18,6 @@ const timer = {
   intervalId: 0,
  
   start() {
-    if (this.isActive) {
-    }
     this.intervalId = setInterval(() => {
       changeBody();
     }, 1000);
